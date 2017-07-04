@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/themes/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/themes/color.css"/>
+    <script type="text/javascript" src="/resources/js/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/resources/js/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/resources/js/feature_set_id/feature_set_id.js"></script>
+</head>
+<body style="padding: 10px;background: rgba(0,0,0,0.02)">
+
+<table id="dg" title="My Users" class="easyui-datagrid" style="width:100%; height:auto"
+       toolbar="#toolbar" pagination="true"
+       rownumbers="true" fitColumns="true" singleSelect="true">
+</table>
+
+
+<style>
+    form#fm_search {
+        display: flex;
+        display: -webkit-flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-content: space-between;
+
+    }
+    .item {
+        height: 30px;
+        width: 300px;
+
+    }
+    .item label {
+
+        width: 120px;
+    }
+
+    .item input {
+        width: 160px;
+    }
+
+    .item select {
+        width: 160px;
+    }
+    .item1 {
+        width: 100%;
+        text-align: right;
+        padding-right: 90px;
+    }
+</style>
+
+<div id="toolbar" >
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New
+        User</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit
+        User</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="searchUser()">Search
+        User</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove
+        User</a>
+</div>
+
+<!--添加信息-->
+<div id="dlg" class="easyui-dialog" style="width:400px"
+     closed="true" buttons="#dlg-buttons">
+    <form id="fm" method="post" style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:10px">
+            <input name="user_name" class="easyui-textbox" required="true" label="姓名:" style="width:90%"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="user_course" class="easyui-textbox" required="true" label="课程:" style="width:90%"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="user_score" class="easyui-textbox" required="true" label="成绩:" style="width:90%"/>
+        </div>
+    </form>
+</div>
+<!--修改信息-->
+<div id="dlg_edit" class="easyui-dialog" style="width:400px"
+     closed="true" buttons="#dlg-buttons-edit">
+    <form id="fm_edit" method="post" style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:10px">
+            <input name="id" class="easyui-textbox" required="true" label="编号:" style="width:90%"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="name" class="easyui-textbox" required="true" label="姓名:" style="width:90%"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="course" class="easyui-textbox" required="true" label="课程:" style="width:90%"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="score" class="easyui-textbox" required="true" label="成绩:" style="width:90%"/>
+        </div>
+    </form>
+</div>
+<!--查看信息-->
+<div id="dlg_check" class="easyui-dialog" style="width:550px;height:500px;maigin-top:50px;padding:20px 50px"
+     closed="true" buttons="#dlg-buttons-check">
+    <form id="fm_check" method="post">
+        <div class="fitem">
+            <label>编码:</label>
+            <input name="id" class="easyui-textbox" readonly="true"/>
+        </div>
+        <div class="fitem">
+            <label>姓名:</label>
+            <input name="name" class="easyui-textbox" readonly="ture"/>
+        </div>
+        <div class="fitem">
+            <label>课程:</label>
+            <input name="course" class="easyui-textbox" readonly="true"/>
+        </div>
+        <div class="fitem">
+            <label>成绩:</label>
+            <input name="score" class="easyui-textbox" readonly="true"/>
+        </div>
+    </form>
+</div>
+
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+       onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+</div>
+
+<div id="dlg-buttons-edit">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="doEdit()" style="width:90px">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+       onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+</div>
+
+</body>
+</html>

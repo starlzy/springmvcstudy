@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Student">
+
+    <resultMap type="com.imooc.mvcdemo.model.Student" id="StudentResult">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR"  property="name"/>
+        <result column="class" jdbcType="VARCHAR" property="course"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+    </resultMap>
+
+    <select id="queryMessageList" parameterType="com.imooc.mvcdemo.model.Student" resultMap="StudentResult">
+      select id,name,class,score from students where 1=1
+        <if test="id!=null and !&quot;&quot;.equals(id.trim())">
+            and id=#{id}
+        </if>
+
+        <if test="name!=null and !&quot;&quot;.equals(name.trim())">
+            and name like '%' #{name} '%'
+        </if>
+
+        <if test="course!=null and !&quot;&quot;.equals(course.trim())">
+            and class=#{course}
+        </if>
+    </select>
+
+    <delete id="deleteOne" parameterType="int">
+      delete from students where id=#{_parameter}
+    </delete>
+
+    <delete id="deleteBatch" parameterType="java.util.List">
+            delete from students where id in (
+        <foreach collection="list" item="item" separator=",">
+          #{item}
+        </foreach>
+        )
+    </delete>
+
+    <insert id="addOne" parameterType="com.imooc.mvcdemo.model.Student" keyProperty="id">
+        insert into students(name,class,score)values(#{name},#{course},#{score})
+    </insert>
+
+    <update id="updateOne" parameterType="com.imooc.mvcdemo.model.Student">
+        update students set name=#{name},class=#{course},score=#{score} where id = #{id}
+    </update>
+</mapper>
