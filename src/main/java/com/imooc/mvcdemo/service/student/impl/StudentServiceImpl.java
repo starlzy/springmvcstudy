@@ -1,55 +1,44 @@
 package com.imooc.mvcdemo.service.student.impl;
 
-import com.imooc.mvcdemo.dao.MessageInterface;
+import com.imooc.mvcdemo.dao.StudentDao;
 import com.imooc.mvcdemo.model.Student;
 import com.imooc.mvcdemo.service.student.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by lzy on 02/07/17.
  */
-@Service("StudentService")
+@Service
 public class StudentServiceImpl implements StudentService {
-
+    private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     @Autowired
-    private MessageInterface messageDao;
+    private StudentDao studentDao;
 
-    public void setMessageDao(MessageInterface messageDao) {
-        this.messageDao = messageDao;
+    public Student getStudentById(String id) {
+
+         return studentDao.queryOne(id);
+
     }
-
-    List<Student> list = new ArrayList<Student>();
-
-    public List<Student> getStudentById(Integer id) {
-        list = messageDao.queryMessageList(id.toString(), "", "");
-        return list;
+    public void deleteOne(String id) {
+        studentDao.deleteOne(id);
     }
 
     public List<Student> getStudentAll() {
-        list = messageDao.queryMessageList("", "", "");
-        return list;
+
+        Student student = new Student();
+        return studentDao.searchAll(student);
     }
 
     public void addStudent(Student student) {
-        String name = student.getName();
-        String course = student.getCourse();
-        int score = student.getScore();
-        messageDao.addOne(name, course, score);
-    }
-
-    public void deleteOne(String id) {
-        messageDao.deleteOne(Integer.valueOf(id));
+        studentDao.addOne(student);
     }
 
     public void updateOne(Student student) {
-        String id = student.getId();
-        String name = student.getName();
-        String course = student.getCourse();
-        int score = student.getScore();
-        messageDao.updateOne(id, name, course, score);
+        studentDao.updateOne(student);
     }
 }

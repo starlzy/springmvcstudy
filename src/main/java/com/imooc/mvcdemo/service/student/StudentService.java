@@ -8,13 +8,12 @@ import java.util.List;
  * Created by lzy on 02/07/17.
  */
 public interface StudentService {
-    public List<Student> getStudentById(Integer id);
+    public Student getStudentById(String id);
+    public void deleteOne(String id);
 
     public List<Student> getStudentAll();
 
     public void addStudent(Student student);
-
-    public void deleteOne(String id);
 
     public void updateOne(Student student);
 }

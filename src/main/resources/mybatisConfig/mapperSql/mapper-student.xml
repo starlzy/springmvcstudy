@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.imooc.mvcdemo.dao.StudentDao">
+
+    <resultMap type="com.imooc.mvcdemo.model.Student" id="StudentResult">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="course" jdbcType="VARCHAR" property="course"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+    </resultMap>
+
+
+    <select id="searchAll" parameterType="com.imooc.mvcdemo.model.Student" resultMap="StudentResult">
+        select id,name,course,score from students where 1=1
+        <if test="id!=null and !&quot;&quot;.equals(id.trim())">
+        and id=#{id}
+        </if>
+
+        <if test="name!=null and !&quot;&quot;.equals(name.trim())">
+        and name like '%' #{name} '%'
+        </if>
+
+        <if test="course!=null and !&quot;&quot;.equals(course.trim())">
+        and course=#{course}
+        </if>
+    </select>
+
+    <delete id="deleteOne" parameterType="String">
+        delete from students where id=#{_parameter}
+    </delete>
+
+    <insert id="addOne" parameterType="com.imooc.mvcdemo.model.Student" keyProperty="id">
+        insert into students (name,course,score)values(#{name},#{course},#{score})
+    </insert>
+
+    <update id="updateOne" parameterType="com.imooc.mvcdemo.model.Student">
+        update students set name=#{name},course=#{course},score=#{score} where id=#{id}
+    </update>
+
+    <select id="queryOne" parameterType="String" resultMap="StudentResult">
+        select id,name,course,score from students where id=#{id}
+    </select>
+
+</mapper>
